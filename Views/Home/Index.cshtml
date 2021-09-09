@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+ 
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
+
+    ViewData["render_gtgb"] = true;
+
+}
+
+    <header class="home-header">
+        <div class="container home-header-content">
+            
+    
+            
+            <partial name="_Nav"></partial>
+            <div>
+                <h1>Gotcha</h1>
+            </div>
+        </div>
+        
+        
+    </header>
+    <main>
+        <div class="container p2">
+        <div class="home-main-content">
+            <p>Het spannendste spel dat je ooit zult spelen</p>
+            <div class="home-main-content-buttonbar">
+                @if (String.IsNullOrEmpty(alias)){
+                    <a href="/Auth" class="button button-red button-big">Log in</a>
+                }else{
+                    <a href="/Dashboard" class="button button-red button-big">Ga naar spel</a>
+                }   
+                <a href="/Home/Introduction" class="button button-red-noborder">Meer uitleg</a>
+            </div>
+            </div>
+        </div>
+    </main>

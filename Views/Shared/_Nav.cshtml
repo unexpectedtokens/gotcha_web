@@ -1,0 +1,25 @@
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
+}
+            <nav @{if(Convert.ToBoolean(ViewData["NavDark"])) {<text>class="dark"</text>}}>
+                <div class="nav-content">
+                    <div class="nav-left"><a class="logo @{if(Convert.ToBoolean(ViewData["NavDark"])) {<text>logo-dark</text>}}" href="/"><span>ZU</span><span>YD</span></a></div>
+                    <div class="nav-right">
+                        @if (String.IsNullOrEmpty(alias)){
+                            <ul><li><a href="/Auth">Log in</a></li><li><a href="/Auth/register">Maak een account</a></li></ul>    
+                        }else{
+                            <ul>
+                                @if (Convert.ToBoolean(ViewData["render_gtgb"])){
+                                    <li><a href="/Dashboard">Ga naar spel</a></li>
+                                }
+                                <li><a href="/Dashboard/profile">Ingelogd als @alias</a></li>
+                            </ul>
+                        }                        
+                    </div>                    
+                </div>
+            </nav>
+
+            

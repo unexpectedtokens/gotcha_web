@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Log in";
+    ViewData["NavDark"] = true;
+}
+@model gotcha_web.Models.User
+
+<div class="container p2">
+@* <nav class="dark">
+                <div class="nav-content">
+                    <div class="nav-left"><a class="logo logo-dark" href="/"><span>ZU</span><span>YD</span></a></div>
+                    <div class="nav-right">
+                        <ul><li><a href="/Auth">Log in</a></li><li><a href="/Auth/register">Maak een account</a></li></ul>
+                    </div>
+                    
+                </div>
+            </nav> *@
+            <partial name="_Nav"></partial>
+</div>
+
+<main>
+    <div class="container p2">
+        <div class="formcontainer">
+
+            <h1>Log in</h1>
+            
+            <form method="POST" action="/Auth">
+                <div class="formcontrol">
+                    <label>
+                        Email
+                    </label>
+                    @Html.TextBoxFor(m => m.email, new { @placeholder = "email", required = true})
+                
+                </div>
+                <div class="formcontrol">
+                    <label>
+                        password
+                    </label>
+                        @Html.PasswordFor(m => m.password, new { @placeholder = "password", required = true})
+                        
+                    </div>
+                <div class="form-buttonbar">                    
+                    <input type="submit" class="button button-red button-big" />
+                    <a href="/Auth/Register" class="button button-red-noborder">Maak een account aan</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+

@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Maak account";
+}
+@model gotcha_web.Models.User
+
+<div class="container p2">
+<nav class="dark">
+                <div class="nav-content">
+                    <div class="nav-left"><a class="logo logo-dark" href="/"><span>ZU</span><span>YD</span></a></div>
+                    <div class="nav-right">
+                        <ul><li><a href="/Auth">Log in</a></li><li><a href="/Auth/register">Maak een account</a></li></ul>
+                    </div>
+                    
+                </div>
+            </nav>
+</div>
+
+<main>
+    <div class="container p2">
+        <div class="formcontainer">
+
+            <h1>Log in</h1>
+            
+            @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+    {
+                <div class="formcontrol">
+                    <label>
+                        Email
+                    </label>
+                
+                @Html.TextBoxFor(m => m.email, new { required = true, placeholder = "Email..."})
+                </div>
+                <div class="formcontrol">
+                    <label>
+                        Alias
+                    </label>
+                    @Html.TextBoxFor(m=>m.alias, new { required = true, placeholder = "Alias..."})
+                        
+                    </div>
+                    <div class="formcontrol">
+                    <label>
+                        Voornaam
+                    </label>
+                    @Html.TextBoxFor(m=>m.firstname, new { required = true, placeholder = "Voornaam..."})
+                        
+                    </div>
+                    <div class="formcontrol">
+                    <label>
+                        Achternaam
+                    </label>
+                    @Html.TextBoxFor(m=>m.lastname, new { required = true, placeholder = "Achternaam..."})
+                        
+                    </div>
+                <div class="formcontrol">
+                    <label>
+                        Wachtwoord
+                    </label>
+                    @Html.PasswordFor(m=>m.password, new { required = true, placeholder = "Wachtwoord..."})
+                        
+                    </div>
+                <div class="form-buttonbar">                    
+                    <input type="submit" class="button button-red button-big" />
+                    <a href="/Auth" class="button button-red-noborder">Log in</a>
+                </div>
+            }
+        </div>
+    </div>
+</main>
+

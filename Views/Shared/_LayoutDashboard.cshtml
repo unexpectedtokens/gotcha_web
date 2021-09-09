@@ -1,0 +1,32 @@
+@{
+    ViewData["NavDark"] = true;
+    ViewData["render_gtgb"] = false;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["title"] - Gotcha Dashboard</title>
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body>
+    <header>
+    <div class="container p2">
+        <partial name="_Nav"></partial>
+    </div>
+</header>
+<div class="container">
+<div class="d-flex">
+<aside class="p2">
+    <p>yes</p>
+    
+
+</aside>
+<main>
+    @RenderBody()
+</main>
+</div>
+</div>
+
+</body>

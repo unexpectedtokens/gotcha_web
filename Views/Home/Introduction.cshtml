@@ -1,0 +1,31 @@
+
+@{
+    ViewData["NavDark"] = true;
+    ViewData["Title"] = "Introduction";
+    
+    ViewData["render_gtgb"] = true;
+
+
+    var info = new List<string>{
+        "Log in of maak een account aan", 
+        "Zoek naar spellen bij jou in de buurt", 
+        "Volgende stap", 
+        "Volgende stap"};
+}
+
+
+
+
+<header class="container p2">
+    <partial name="_Nav"></partial>
+</header>
+
+
+<main class="container p2">
+    <div class="stepscontainer">
+        @for (int i = 0; i < info.Count; i++)
+        {
+            <div class="step-card"><h5>Stap @(i + 1)</h5><p>@info[i]</p></div>
+            }
+    </div>
+</main>
