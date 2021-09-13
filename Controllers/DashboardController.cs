@@ -29,6 +29,10 @@ namespace gotcha_web.Controllers
             return View();
         }
 
+        public IActionResult ProfileDetail(){
+            return View("Profile/index");
+        }
+
         
     }
 }

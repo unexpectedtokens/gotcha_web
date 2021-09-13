@@ -12,6 +12,7 @@ using gotcha_web.Models;
 
 
 
+
 namespace gotcha_web.Controllers
 {
     public class AuthController : Controller
@@ -37,7 +38,6 @@ namespace gotcha_web.Controllers
             Console.WriteLine(user.toString());
             user.alias = "daniel";
             HttpContext.Session.SetString("alias", user.alias);
-            HttpContext.Session.SetInt32("id", 1);
             return Redirect("/Dashboard");
         }
 
@@ -53,6 +53,7 @@ namespace gotcha_web.Controllers
     public IActionResult Register(User user)
         {
             Console.WriteLine(user.toString());
+            HttpContext.Session.SetString("alias", user.alias);
             return Redirect("/Dashboard");
         }
 

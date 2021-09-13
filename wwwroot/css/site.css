@@ -176,6 +176,7 @@ nav.dark .nav-right ul li a {
 .form-buttonbar {
   display: flex;
   align-items: center;
+  margin-top: 4rem;
 }
 /*
 _

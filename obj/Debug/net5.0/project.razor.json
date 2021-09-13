@@ -15619,6 +15619,11 @@
   "RootNamespace": "gotcha_web",
   "Documents": [
     {
+      "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Dashboard/Profile/index.cshtml",
+      "TargetPath": "Views\\Dashboard\\Profile\\index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Home/Introduction.cshtml",
       "TargetPath": "Views\\Home\\Introduction.cshtml",
       "FileKind": "mvc"
