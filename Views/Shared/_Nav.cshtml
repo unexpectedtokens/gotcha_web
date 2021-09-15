@@ -15,7 +15,10 @@
                                 @if (Convert.ToBoolean(ViewData["render_gtgb"])){
                                     <li><a href="/Dashboard">Ga naar spel</a></li>
                                 }
-                                <li><a href="/Dashboard/profile">Ingelogd als @alias</a></li>
+                                @if (Convert.ToBoolean(ViewData["render_db_home"])){
+                                    <li><a href="/Dashboard">Hoofdmenu</a></li>
+                                }
+                                <li><a href="/Dashboard/Profile">Ingelogd als @alias</a></li>
                             </ul>
                         }                        
                     </div>                    

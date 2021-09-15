@@ -28,6 +28,7 @@ namespace gotcha_web
             services.AddHttpContextAccessor();
             services.AddSession(options =>
             {
+                options.Cookie.MaxAge = TimeSpan.FromDays(3);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

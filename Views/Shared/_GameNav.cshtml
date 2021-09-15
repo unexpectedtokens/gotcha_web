@@ -1,0 +1,35 @@
+@{    
+    @using Microsoft.AspNetCore.Http;
+    @using gotcha_web.util
+    @inject IHttpContextAccessor HttpContextAccessor;
+ 
+    var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
+    var gameleaderrights = HttpContextAccessor.HttpContext.Session.GetString("loggedinas") == "gameleader"; 
+  
+    var links = new List<Link>{
+       new Link("Alle spellen", "Games"),
+       new Link("Zoek naar een spel", "Findgame"),
+        new Link("Spellen waar ik deel aan neem", "Mygamespl")
+    };
+    if (gameleaderrights){
+        links.Add(new Link("Spellen die ik beheer", "Mygamesgl"));
+        links.Add(new Link("Maak een spel", "GameCreate"));
+    }
+}
+
+
+
+<header class="game-header">
+    <div class="banner"></div>
+    <div class="game-nav-container">
+        <ul>
+            @{
+                
+                foreach(var x in links){
+                    <li><a href="/Games/@x.path">@x.linktext</a></li>
+                }
+            }
+        </ul>
+    </div>
+
+</header>

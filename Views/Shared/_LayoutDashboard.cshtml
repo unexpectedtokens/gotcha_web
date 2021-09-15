@@ -1,6 +1,7 @@
 @{
     ViewData["NavDark"] = true;
     ViewData["render_gtgb"] = false;
+    ViewData["render_db_home"] = true;
 }
 
 <!DOCTYPE html>
@@ -16,17 +17,8 @@
         <partial name="_Nav"></partial>
     </div>
 </header>
-<div class="container">
-<div class="d-flex">
-<aside class="p2">
-    <ul>
-        @{
-            foreach(var x in new List<string>{""})
-        }
-    </ul>
-    
 
-</aside>
+
 <main>
     @RenderBody()
 </main>

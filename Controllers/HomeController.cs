@@ -21,6 +21,7 @@ namespace gotcha_web.Controllers
 
         public IActionResult Index()
         {
+            Console.WriteLine(HttpContext.Request.Path.Value);
             return View();
         }
 

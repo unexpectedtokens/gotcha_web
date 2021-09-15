@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gotcha_web.database;
 
 namespace gotcha_web.Migrations
 {
     [DbContext(typeof(GotchaDBContext))]
-    partial class GotchaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210915083107_4thmigration")]
+    partial class _4thmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,9 +104,6 @@ namespace gotcha_web.Migrations
                     b.Property<int?>("GameLeaderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GameTypeId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
 
@@ -117,8 +116,6 @@ namespace gotcha_web.Migrations
                     b.HasKey("GameId");
 
                     b.HasIndex("GameLeaderId");
-
-                    b.HasIndex("GameTypeId");
 
                     b.ToTable("Games");
                 });
@@ -293,13 +290,7 @@ namespace gotcha_web.Migrations
                         .WithMany()
                         .HasForeignKey("GameLeaderId");
 
-                    b.HasOne("gotcha_web.Models.Gametype", "Gametype")
-                        .WithMany()
-                        .HasForeignKey("GameTypeId");
-
                     b.Navigation("GameLeader");
-
-                    b.Navigation("Gametype");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.GametypeRequest", b =>

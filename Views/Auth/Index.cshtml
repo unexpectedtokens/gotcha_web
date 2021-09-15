@@ -2,7 +2,7 @@
     ViewData["Title"] = "Log in";
     ViewData["NavDark"] = true;
 }
-@model gotcha_web.Models.User
+@model gotcha_web.Controllers.AuthController.LoginFormModel;
 
 <div class="container p2">
 @* <nav class="dark">
@@ -37,9 +37,16 @@
                     </label>
                         @Html.PasswordFor(m => m.password, new { @placeholder = "password", required = true})
                         
-                    </div>
+                </div>
+                <div class="formcontrol">
+                    <label>
+                        Log in als spelleider
+                    </label>
+                        @Html.CheckBoxFor(m=>m.loginAsGameLeader)
+                        
+                </div>
                 <div class="form-buttonbar">                    
-                    <input type="submit" class="button button-red button-big" />
+                    <input type="submit" class="button button-red button-big" value="Log in"/>
                     <a href="/Auth/Register" class="button button-red-noborder">Maak een account aan</a>
                 </div>
             </form>

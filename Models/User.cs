@@ -1,10 +1,10 @@
 
 
-
+using gotcha_web.database;
 
 namespace gotcha_web.Models
 {
-    public class User{
+    public abstract class User{
         public int Id {get;set;}
         public string email {get;set;}
         public string password {get;set;}
@@ -14,7 +14,14 @@ namespace gotcha_web.Models
 
         public string userImage {get;set;}
         public string toString(){
-            return $"email: {email}, alias: {alias}, fullname: {firstname} {lastname}";
+            return $"{firstname} {lastname}";
         }
+
+        public bool AttemptAuthentication(string AttemptedPassword)
+        {
+            return password == AttemptedPassword;
+        }
+        
+        
     }
 }

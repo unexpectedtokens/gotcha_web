@@ -1,5 +1,5 @@
 
-
+@using gotcha_web.util;
 
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
@@ -7,4 +7,29 @@
 }
 
 
-<div class="container p2"><p>yes</p></div>
+<div class="container p2">
+    <div class="main-dashboard-container">
+        <h1>Welkom @ViewData["user"]</h1>
+    <ul class="main-dashboard-links">
+        @{
+            //Hier links toevoegen voor het dashboard
+            var links = new List<Link>{
+            new Link("Hoofdmenu", ""), 
+            new Link("Spellen", "Games"),
+            new Link("Mijn profiel", "Profile"),
+            new Link("Log uit", "Logout")
+            };
+
+            foreach(var x in links)
+            {
+                <li><a href="/Dashboard/@x.path" @if((String)ViewData["active"]== x.linktext){<text>class="active"</text>}>@x.linktext</a></li>
+            }
+        }
+    </ul>
+
+
+    </div>
+    
+    
+
+</div>

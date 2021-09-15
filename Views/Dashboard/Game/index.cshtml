@@ -1,0 +1,40 @@
+@{
+       
+    @using Microsoft.AspNetCore.Http;
+    @using gotcha_web.util
+    @inject IHttpContextAccessor HttpContextAccessor;
+    ViewData["active"] = "Spellen";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";   
+    var games = (List<Game>)ViewData["games"];
+    var gameleaderrights = HttpContextAccessor.HttpContext.Session.GetString("loggedinas") == "gameleader"; 
+}
+
+
+
+
+
+<partial name="_GameNav"></partial>
+
+
+<div class="games-container">
+    
+    <div class="games-list">
+        @{
+            foreach(var x in games){
+                
+                <a href="/@x.GameId" class="game-item">
+                    <h3>@x.Title</h3>
+                </a>
+            }   
+        }
+    </div>
+    @{
+        if(games.Count == 0){
+        <p class="nogamesmessage">Er zijn nog geen games</p>
+            if(gameleaderrights){
+                    <button>Maak een game</button>
+                }
+        }
+    }
+    
+</div>

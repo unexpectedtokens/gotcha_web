@@ -6,16 +6,13 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
-
+    ViewData["url"] = HttpContextAccessor.HttpContext.Request;
     ViewData["render_gtgb"] = true;
 
 }
 
     <header class="home-header">
         <div class="container home-header-content">
-            
-    
-            
             <partial name="_Nav"></partial>
             <div>
                 <h1>Gotcha</h1>

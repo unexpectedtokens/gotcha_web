@@ -11,6 +11,17 @@ namespace gotcha_web.Models
         {
             Eliminations = new List<Elimination>();
         }
+
+
+        public GameLeader(Player playerAccount){
+            this.alias = playerAccount.alias;
+            this.email = playerAccount.email;
+            this.password = playerAccount.password;
+            this.firstname = playerAccount.firstname;
+            this.lastname = playerAccount.lastname;
+            this.PlayerAccount = playerAccount;
+            this.Eliminations = new List<Elimination>();
+        }
         public int GetAmountOfEliminations(){
             return Eliminations.Count;
         }

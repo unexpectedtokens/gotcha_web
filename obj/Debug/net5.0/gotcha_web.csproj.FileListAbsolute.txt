@@ -90,3 +90,5 @@
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Profile/index.cshtml.g.cs
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/Humanizer.dll
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/index.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Shared/_GameNav.cshtml.g.cs

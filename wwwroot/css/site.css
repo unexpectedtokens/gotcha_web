@@ -279,3 +279,109 @@ _
 _
 _
 */
+
+/*
+_
+_
+Dashboard 
+*/
+
+.main-dashboard-container {
+  max-width: 620px;
+  margin: auto;
+  justify-content: center;
+}
+.main-dashboard-links {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.main-dashboard-container h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.main-dashboard-links li a {
+  padding: 2rem;
+  color: var(--red);
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  display: block;
+  text-align: center;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.main-dashboard-links li a:hover {
+  background: #eee;
+}
+/*
+_
+_
+_
+*/
+/*
+_
+_
+Games 
+*/
+.game-nav-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.game-nav-container ul {
+  display: flex;
+  padding: 2rem 0;
+}
+
+.game-nav-container ul li a {
+  padding: 1.5rem;
+  display: block;
+  font-size: 1.5rem;
+  transition: background 0.3s;
+  border-radius: 5px;
+}
+.game-nav-container ul li a:hover,
+.game-nav-container ul li a.active {
+  background: #eee;
+}
+
+.game-header .banner {
+  background: linear-gradient(var(--redtransp), var(--redtransp)),
+    url("/assets/images/chess.jpeg");
+  min-height: 30vh;
+  width: 100%;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.games-container {
+  background-color: #eee;
+  min-height: 80vh;
+  padding: 2rem;
+}
+.games-list {
+  display: flex;
+}
+.games-container .nogamesmessage {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.games-list .game-item {
+  background: #fff;
+  border-radius: 5px;
+  padding: 2rem;
+  max-width: 50%;
+}
+/*
+_
+_
+_
+*/
