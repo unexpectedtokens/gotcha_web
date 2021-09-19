@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using gotcha_web.Models;
 using Microsoft.AspNetCore.Http;
 using gotcha_web.database;
+using Microsoft.EntityFrameworkCore;
 
 namespace gotcha_web.Controllers
 {
@@ -37,15 +38,77 @@ namespace gotcha_web.Controllers
             return View("Profile/index");
         }
 
-        public IActionResult Games(){
+        public IActionResult Games(string search){
+            Console.WriteLine(search);
             var alias = HttpContext.Session.GetString("alias");
             if (String.IsNullOrEmpty(alias)){
                 return Redirect("/Auth");
             }
-            ViewData["games"] = _ctx.Games.ToList();
+            ViewData["games"] = _ctx.Games.Include(g => g.GameLeader).Include(g => g.Players).ToList();
             return View("Game/index");
         }
 
+        public class SearchForm{
+            public string searchQ {get;set;}
+        }
+        public IActionResult FindGame()
+        {
+            return View("Game/Search");
+        }
+
+        [HttpPost]
+        public IActionResult FindGame(SearchForm form)
+        {
+            
+            return Redirect($"/Dashboard/Games?search={form.searchQ}");
+        }
+
+        public IActionResult GameDetail(int id)
+        {
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if (String.IsNullOrEmpty(alias)){
+                return Redirect("/Auth");
+            }
+            var game = Game.GetByID(id, _ctx);
+            if(game == null){
+                return Redirect("/Dashboard/Games");
+            }
+            ViewData["owner"] = game.userIsOwner(alias, loggedinas);
+            ViewData["game"] = game;
+            ViewData["playerInGame"] = game.isPlayerInGame(alias);
+            return View("Game/Detail");
+        }
+
+
+        public IActionResult JoinGame(int id)
+        {
+            var game = Game.GetByID(id, _ctx);
+            if (game == null)
+            {
+                return Redirect("/Dashboard/Games");
+            }
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if(loggedinas == "admin"){
+                return Redirect("/Dashboard/Games");
+            }
+            try{
+                if(loggedinas == "gameleader")
+                {
+                    var gl = _ctx.GameLeaders.Where(g => g.alias == alias).Include(g => g.PlayerAccount).FirstOrDefault();
+                    game.GameLeader.AddPlayerToGame(gl.PlayerAccount, game);
+
+                }else{
+                    var pl = _ctx.Players.Where(p => p.alias == alias).FirstOrDefault();
+                    game.GameLeader.AddPlayerToGame(pl, game);
+                }
+                _ctx.SaveChanges();
+            }catch(Exception e){
+                Console.WriteLine(e);
+            }
+            return Redirect($"/Dashboard/GameDetail/{id}");
+        }
         public IActionResult Logout(){
             HttpContext.Session.SetString("alias", "");
             return Redirect("/Auth");

@@ -4,6 +4,7 @@
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     ViewData["title"] = "Home";
+    
 }
 
 
@@ -14,7 +15,6 @@
         @{
             //Hier links toevoegen voor het dashboard
             var links = new List<Link>{
-            new Link("Hoofdmenu", ""), 
             new Link("Spellen", "Games"),
             new Link("Mijn profiel", "Profile"),
             new Link("Log uit", "Logout")

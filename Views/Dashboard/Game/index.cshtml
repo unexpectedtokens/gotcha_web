@@ -3,7 +3,7 @@
     @using Microsoft.AspNetCore.Http;
     @using gotcha_web.util
     @inject IHttpContextAccessor HttpContextAccessor;
-    ViewData["active"] = "Spellen";
+    ViewData["Title"] = "Spellen";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";   
     var games = (List<Game>)ViewData["games"];
     var gameleaderrights = HttpContextAccessor.HttpContext.Session.GetString("loggedinas") == "gameleader"; 
@@ -22,8 +22,18 @@
         @{
             foreach(var x in games){
                 
-                <a href="/@x.GameId" class="game-item">
+                
+                <a href="/Dashboard/GameDetail/@x.GameId" class="game-item">
+                <div class="game-item-innercont">
+                    <div class="game-item-left">
                     <h3>@x.Title</h3>
+                    <p>Van: <span>@x.GameLeader.alias</span></p>
+                    </div>
+                    <div class="game-item-right">
+                        <span class="material-icons">people</span>
+                        <span class="count">@x.GetPlayerCount()</span>
+                    </div>
+                    </div>
                 </a>
             }   
         }

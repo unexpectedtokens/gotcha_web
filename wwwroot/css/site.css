@@ -4,6 +4,7 @@
   --red: #f21d44;
   --redtransp: #f21d44ee;
   --fontColor: #2e3041;
+  --shadow: 0 0 1.5rem rgba(0, 0, 0, 0.1);
 }
 
 html {
@@ -58,6 +59,10 @@ li {
 
 a {
   text-decoration: none;
+}
+
+input:focus {
+  outline: none;
 }
 /*REUSABLES
 ______
@@ -249,7 +254,7 @@ Intro
 .step-card {
   padding: 3rem;
   border-radius: 5px;
-  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
   width: 70%;
   margin-bottom: 4rem;
 }
@@ -365,9 +370,14 @@ Games
   background-color: #eee;
   min-height: 80vh;
   padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 .games-list {
   display: flex;
+  margin-top: 3rem;
+  width: 70%;
 }
 .games-container .nogamesmessage {
   font-size: 1.5rem;
@@ -377,9 +387,169 @@ Games
 .games-list .game-item {
   background: #fff;
   border-radius: 5px;
-  padding: 2rem;
-  max-width: 50%;
+  padding: 3rem;
+  width: 250px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s;
 }
+@media screen and (max-width: 800px) {
+  .games-list {
+    width: 90%;
+  }
+  .games-list .game-item {
+    width: 100%;
+  }
+}
+
+.games-list .game-item:hover {
+  transform: scale(1.05);
+}
+
+.game-item h3 {
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+.game-item p {
+  font-size: 1.3rem;
+}
+.game-item p span {
+  font-weight: bold;
+  color: var(--red);
+}
+
+.game-item-innercont {
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-item-right {
+  display: flex;
+  align-items: center;
+}
+.game-item-right .count {
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+}
+
+.game-detail-container {
+  padding-top: 4rem;
+}
+.game-detail-container h1 {
+  font-size: 3rem;
+  text-transform: capitalize;
+  margin-right: 5rem;
+}
+.game-detail-container p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+.game-detail-container p span.gameleader {
+  color: var(--red);
+}
+.game-detail-container p span {
+  font-weight: bold;
+}
+.game-detail-container > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.game-detail-container > div > div {
+  display: flex;
+  align-items: center;
+}
+
+.game-detail-container > div > div .count {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.game-detail-container .join-game {
+  display: block;
+  background-color: var(--red);
+  color: #fff;
+  padding: 2rem;
+  margin-top: 5rem;
+  text-align: center;
+  font-size: 1.8rem;
+  border-radius: 5px;
+}
+
+.players-container {
+  margin: 6rem 0;
+}
+.players-container h2 {
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--fontColor);
+}
+.players-container > div > p {
+  font-size: 1.5rem;
+  margin: 2rem 0;
+  text-align: center;
+  color: #2e3041;
+}
+.players-container > div .playeritems {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.playeritems .playeritem {
+  padding: 1rem 5rem;
+  border-bottom: 0.5px solid #eee;
+}
+.playeritems .playeritem p {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+.playeritems .playeritem p span:first-of-type {
+  text-transform: capitalize;
+}
+.playeritems .playeritem p .active {
+  color: rgb(112, 241, 119);
+}
+.playeritems .playeritem p .eliminated {
+  color: var(--red);
+}
+/*
+_
+_
+_
+*/
+
+/*
+_
+_
+SEARCH
+*/
+.searchcontainer form {
+  margin-top: 5rem;
+  width: 100%;
+  display: flex;
+  box-shadow: var(--shadow);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.searchcontainer .searchinput {
+  width: 100%;
+  border: none;
+
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.searchcontainer .searchbutton {
+  padding: 1.5rem;
+  display: block;
+  border: none;
+  background: var(--red);
+  color: #fff;
+}
+
 /*
 _
 _

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-
-
+using System;
+using gotcha_web.database;
 namespace gotcha_web.Models
 {
     public class GameLeader : User
@@ -22,8 +22,14 @@ namespace gotcha_web.Models
             this.PlayerAccount = playerAccount;
             this.Eliminations = new List<Elimination>();
         }
-        public int GetAmountOfEliminations(){
-            return Eliminations.Count;
+        public void AddPlayerToGame(Player player, Game game)
+        {
+            if(game.GameLeader.alias == player.alias){
+                throw new Exception("Je kan niet deelnemen aan je eigen spel");
+            }
+            game.Players.Add(player);
         }
+
+
     }
 }

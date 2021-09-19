@@ -92,3 +92,6 @@
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/Microsoft.EntityFrameworkCore.Design.dll
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/index.cshtml.g.cs
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Shared/_GameNav.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/Search.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/Detail.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/GameCreate.cshtml.g.cs

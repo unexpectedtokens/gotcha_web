@@ -1,0 +1,15 @@
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";   
+    ViewData["Title"] = "Zoeken";
+}
+@model gotcha_web.Controllers.DashboardController.SearchForm;
+<div class="container p2 searchcontainer">
+    @using (Html.BeginForm("FindGame", "Dashboard", FormMethod.Post))
+    {
+        @Html.TextBoxFor(m => m.searchQ, new { @class = "searchinput", placeholder = "Zoekterm..."});
+        <input type="submit" value="Zoek naar spellen" class="searchbutton"/>
+    }
+    
+
+
+</div>

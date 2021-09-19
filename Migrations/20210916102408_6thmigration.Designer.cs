@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gotcha_web.database;
 
 namespace gotcha_web.Migrations
 {
     [DbContext(typeof(GotchaDBContext))]
-    partial class GotchaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210916102408_6thmigration")]
+    partial class _6thmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +49,6 @@ namespace gotcha_web.Migrations
                     b.Property<int?>("EliminationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GameId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("TargetId")
                         .HasColumnType("int");
 
@@ -58,8 +57,6 @@ namespace gotcha_web.Migrations
                     b.HasIndex("AssassinId");
 
                     b.HasIndex("EliminationId");
-
-                    b.HasIndex("GameId");
 
                     b.HasIndex("TargetId");
 
@@ -270,10 +267,6 @@ namespace gotcha_web.Migrations
                         .WithMany()
                         .HasForeignKey("EliminationId");
 
-                    b.HasOne("gotcha_web.Models.Game", null)
-                        .WithMany("Contracts")
-                        .HasForeignKey("GameId");
-
                     b.HasOne("gotcha_web.Models.Player", "Target")
                         .WithMany()
                         .HasForeignKey("TargetId");
@@ -338,8 +331,6 @@ namespace gotcha_web.Migrations
 
             modelBuilder.Entity("gotcha_web.Models.Game", b =>
                 {
-                    b.Navigation("Contracts");
-
                     b.Navigation("Rules");
                 });
 

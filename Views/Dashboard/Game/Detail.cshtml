@@ -1,0 +1,57 @@
+@using gotcha_web.Models;
+
+@{
+
+    var game = (Game)ViewData["game"];
+    ViewData["NavDark"] = true;
+    ViewData["Title"] = game.Title;
+    var owner = Convert.ToBoolean(ViewData["owner"]);
+    var inGame = Convert.ToBoolean(ViewData["playerInGame"]);
+    ViewData["render_db_home"] = true;
+}
+
+
+<div class="container p2">
+    <partial name="_Nav"></partial>
+</div>
+
+
+
+<div class="container p2">
+    <div class="game-detail-container">
+        <div>
+            <h1>@game.Title</h1>
+            <div><span class="material-icons">people</span>
+                        <span class="count">@game.GetPlayerCount()</span></div>
+        </div>
+        <p>Van: <span class="gameleader">@game.GameLeader.alias</p></span>
+        <p><span>Beschrijving</span>: @game.Description</p>
+        @{
+            
+            if(!owner && !inGame){
+                <a href="/Dashboard/JoinGame/@game.GameId" class="join-game">Neem deel aan spel</a>
+            }
+        }
+    </div>
+    @if(owner){
+        <div class="players-container">
+            <h2>Spelers</h2>
+            <div>
+                @if(game.GetPlayerCount() == 0){
+                    <p>Er zitten nog geen spelers in dit spel</p>
+                }else{
+                    <div class="playeritems">
+                        @foreach (var p in game.Players)
+                        {
+                            <div class="playeritem">
+                                <p><span>@p.alias</span>@if(game.isPlayerEliminated(p.alias)){<span class="eliminated">Geëlimineerd</span>}else{<span class="active">Actief</span>}</p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
