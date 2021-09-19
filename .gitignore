@@ -1,0 +1,6 @@
+Migrations/*
+bin
+.vscode
+.vs
+devdb.db
+

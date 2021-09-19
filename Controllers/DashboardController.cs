@@ -10,6 +10,8 @@ using gotcha_web.Models;
 using Microsoft.AspNetCore.Http;
 using gotcha_web.database;
 using Microsoft.EntityFrameworkCore;
+using gotcha_web.Forms;
+using System.Web.Razor;
 
 namespace gotcha_web.Controllers
 {
@@ -108,6 +110,48 @@ namespace gotcha_web.Controllers
                 Console.WriteLine(e);
             }
             return Redirect($"/Dashboard/GameDetail/{id}");
+        }
+
+        public IActionResult CreateGame(){
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if (String.IsNullOrEmpty(alias)){
+                return Redirect("/Auth");
+            }
+            if (loggedinas=="player")
+            {
+                return Redirect("/Dashboard/Games");
+            } 
+            
+            ViewBag.gametypes = _ctx.Gametypes.ToList();
+            return View("Game/GameCreate");
+        }
+
+
+        
+
+        [HttpPost]
+        public IActionResult CreateGame(GameCreateForm form)
+        {
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if (String.IsNullOrEmpty(alias)){
+                return Redirect("/Auth");
+            }
+            if (loggedinas=="player")
+            {
+                return Redirect("/Dashboard/Games");
+            }
+
+            var gl = GameLeader.FindByID(alias, _ctx);
+            try{
+                gl.CreateGame(_ctx, form);
+                _ctx.SaveChanges();
+            }catch(Exception e){
+                Console.WriteLine(e);
+            }
+            
+            return Redirect("/Dashboard/Games");
         }
         public IActionResult Logout(){
             HttpContext.Session.SetString("alias", "");

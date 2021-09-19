@@ -110,7 +110,7 @@ namespace gotcha_web.Migrations
                     b.Property<int?>("GameTypeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Public")
+                    b.Property<bool>("Private")
                         .HasColumnType("bit");
 
                     b.Property<string>("Region")
@@ -136,6 +136,9 @@ namespace gotcha_web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GameTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GameTypeId");

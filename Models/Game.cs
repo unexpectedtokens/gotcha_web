@@ -11,7 +11,7 @@ namespace gotcha_web.Models
         public string Title {get;set;}
         public string Description {get;set;}
         public string Region {get;set;}
-        public bool Public {get;set;}
+        public bool Private {get;set;}
         public Gametype Gametype {get;set;}
         public ICollection<Rule> Rules {get;set;}
         public ICollection<Player> Players{get;set;}
@@ -30,7 +30,7 @@ namespace gotcha_web.Models
 
         public static Game GetByID(int id, GotchaDBContext ctx)
         {
-            return ctx.Games.Include(g => g.Players).Include(g => g.GameLeader).Include(g => g.Contracts).FirstOrDefault();
+            return ctx.Games.Include(g => g.Players).Include(g => g.GameLeader).Include(g => g.Contracts).Where(g => g.GameId == id).FirstOrDefault();
         }
 
         public bool userIsOwner(string alias, string loggedinas){
@@ -58,7 +58,9 @@ namespace gotcha_web.Models
             }
             return inGame;
         }
-
+        public void AddPlayer(Player player){
+            this.Players.Add(player);
+        }
         public bool isPlayerEliminated(string alias)
         {
             var eliminated = false;
@@ -72,6 +74,21 @@ namespace gotcha_web.Models
                 }
             }
             return eliminated;
+        }
+
+        public void SetGameSpecification(Gametype gametype, GameLeader gameLeader, string title, string description, string region)
+        {
+            Gametype = gametype;
+            GameLeader = gameLeader;
+            Region = region;
+            Title = title;
+            Description = description;
+
+        }
+
+        public bool CheckGameSpecification()
+        {
+            return true;
         }
 
     }

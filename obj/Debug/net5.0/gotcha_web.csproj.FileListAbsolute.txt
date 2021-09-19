@@ -95,3 +95,10 @@
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/Search.cshtml.g.cs
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/Detail.cshtml.g.cs
 /Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/GameCreate.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.Mvc.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.Razor.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.Helpers.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.WebPages.Deployment.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.WebPages.Razor.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.WebPages.dll
+/Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/Microsoft.Web.Infrastructure.dll

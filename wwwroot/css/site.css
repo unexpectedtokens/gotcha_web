@@ -391,6 +391,7 @@ Games
   width: 250px;
   box-shadow: var(--shadow);
   transition: transform 0.3s;
+  margin: 0.5rem;
 }
 @media screen and (max-width: 800px) {
   .games-list {
