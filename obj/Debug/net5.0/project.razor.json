@@ -15699,8 +15699,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Dashboard/Game/WordGameDetail.cshtml",
+      "TargetPath": "Views\\Dashboard\\Game\\WordGameDetail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Shared/_GameDetail.cshtml",
+      "TargetPath": "Views\\Shared\\_GameDetail.cshtml",
       "FileKind": "mvc"
     },
     {

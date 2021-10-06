@@ -1,9 +1,7 @@
 @using gotcha_web.Models;
 
 @{
-
-    Game game = (Game)ViewData["game"];
-    
+    WordGame game = (WordGame)ViewData["game"];
     ViewData["NavDark"] = true;
     ViewData["Title"] = game.Title;
     var owner = Convert.ToBoolean(ViewData["owner"]);
@@ -16,31 +14,29 @@
     ViewData["Description"] = game.Description;
     ViewData["gameleaderalias"] = game.GameLeader.alias;
     ViewData["gameactive"] = game.Active;
+    Console.WriteLine(game.WordContracts);
 }
+
+
+
+
 
 <partial name="_GameDetail"></partial>
 
 
-
 <div class="container p2">
-    
     @if (owner){
      <div class="grid-container">
             <div class="contracts-container">
                 <h2>Contracten</h2>
-    @if(game.GetContractCount() == 0){
-                    if(game.GetPlayerCount() >= 3){
-                        <p>Er zijn meer spelers nodig om het spel te starten</p>
-                    }
-                    
-                }else{
+                @if(game.Active){
                     <div class="contracts-list">
                         @{
                             
-                                @foreach (var c in game.Contracts)
+                                @foreach (var c in game.WordContracts)
                                 {
                                     <div class="contract">
-                                        <p><span class="alias">@c.Assassin.alias</span><span>Jaagt op</span><span class="alias">@c.Target.alias</span></p>
+                                        <p><span class="alias">@c.Assassin.alias</span><span>Jaagt op</span><span class="alias">@c.Target.alias</span><span>Met woord: <span>@c.Word</span></span></p>
                                     </div>
                                 }
 
@@ -49,7 +45,9 @@
                         }
                         
                     </div>
-}
+                }else{
+                    <p>Het spel is nog niet gestart</p>
+                }
             </div>
      </div>
 
@@ -60,7 +58,6 @@
 }
 
 
-        
-    
+
 </div>
 

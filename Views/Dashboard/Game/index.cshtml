@@ -18,16 +18,26 @@
 
 <div class="games-container">
     
-    <div class="games-list">
+
+    @{
+        if(games.Count == 0){
+        <p class="nogamesmessage">Er zijn nog geen spellen</p>
+            if(gameleaderrights){
+                    <a href="CreateGame" class="button button-red">Maak een spel</a>
+                }
+        } else{
+                <div class="games-list">
         @{
             foreach(var x in games){
+                var wordgame = x.GetType().Name == "WordGame";
                 
-                
-                <a href="/Dashboard/GameDetail/@x.GameId" class="game-item">
+                <a href="/Dashboard/@if(wordgame){<text>WordGameDetail</text>}else{<text>GameDetail</text>}/@x.GameId" class="game-item">
                 <div class="game-item-innercont">
                     <div class="game-item-left">
                     <h3>@x.Title</h3>
+                    <p>Speltype: @if(x.GetType().Name == "WordGame"){<text>Woordspel</text>}else{<text>Normaal spel</text>}</p>
                     <p>Van: <span>@x.GameLeader.alias</span></p>
+
                     </div>
                     <div class="game-item-right">
                         <span class="material-icons">people</span>
@@ -38,12 +48,6 @@
             }   
         }
     </div>
-    @{
-        if(games.Count == 0){
-        <p class="nogamesmessage">Er zijn nog geen games</p>
-            if(gameleaderrights){
-                    <button>Maak een game</button>
-                }
         }
     }
     

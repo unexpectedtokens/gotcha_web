@@ -48,6 +48,7 @@ h6,
 span,
 li,
 label,
+input,
 a {
   font-family: "Montserrat", sans-serif;
   color: var(--fontColor);
@@ -127,6 +128,7 @@ nav.dark .nav-right ul li a {
   border: none;
   font-size: 16px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .button-red {
@@ -183,6 +185,11 @@ nav.dark .nav-right ul li a {
   align-items: center;
   margin-top: 4rem;
 }
+
+.hide {
+  display: none;
+}
+
 /*
 _
 _
@@ -212,9 +219,15 @@ Home
   height: 50vh;
   background: linear-gradient(var(--redtransp), var(--redtransp)),
     url("/assets/images/chess.jpeg");
-  background-size: 100%;
+  background-size: 120%;
   background-position: center;
   background-repeat: no-repeat;
+}
+@media screen and (max-width: 1000px) {
+  .home-header,
+  .game-header .banner {
+    background-size: 170%;
+  }
 }
 
 .home-header-content {
@@ -257,6 +270,13 @@ Intro
   box-shadow: var(--shadow);
   width: 70%;
   margin-bottom: 4rem;
+  border-left: 2px solid var(--red);
+}
+
+@media screen and (max-width: 800px) {
+  .step-card {
+    width: 100%;
+  }
 }
 .step-card h5 {
   color: var(--red);
@@ -341,7 +361,24 @@ Games
 }
 .game-nav-container ul {
   display: flex;
+  justify-content: center;
   padding: 2rem 0;
+  max-width: 90%;
+  overflow: scroll;
+}
+.game-nav-container ul {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+  max-width: 90%;
+  overflow: scroll;
+}
+
+.game-nav-container ul li {
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-nav-container ul li a {
@@ -371,24 +408,29 @@ Games
   min-height: 80vh;
   padding: 2rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
 }
 .games-list {
   display: flex;
+  flex-direction: column;
   margin-top: 3rem;
   width: 70%;
 }
 .games-container .nogamesmessage {
   font-size: 1.5rem;
   text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
 .games-list .game-item {
   background: #fff;
   border-radius: 5px;
   padding: 3rem;
-  width: 250px;
+  width: 100%;
+  border-left: 3px solid #f21d44;
   box-shadow: var(--shadow);
   transition: transform 0.3s;
   margin: 0.5rem;
@@ -397,13 +439,10 @@ Games
   .games-list {
     width: 90%;
   }
-  .games-list .game-item {
-    width: 100%;
-  }
 }
 
 .games-list .game-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .game-item h3 {
@@ -515,6 +554,50 @@ Games
 .playeritems .playeritem p .eliminated {
   color: var(--red);
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 2rem;
+}
+
+.contracts-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--fontColor);
+  padding-bottom: 1rem;
+}
+.contracts-container > p {
+  font-size: 1.5rem;
+}
+.genconbut {
+  padding: 2rem !important;
+  margin-top: 2rem;
+}
+.contracts-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+}
+
+.contracts-list .contract p {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contracts-list .contract {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.contracts-list .contract span {
+  font-size: 1.5rem;
+}
+.contracts-list .contract span.alias {
+  font-weight: 900;
+}
 /*
 _
 _
@@ -549,6 +632,8 @@ SEARCH
   border: none;
   background: var(--red);
   color: #fff;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 /*

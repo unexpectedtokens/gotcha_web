@@ -44,23 +44,13 @@ namespace gotcha_web.Controllers {
             var gl = new GameLeader(player1);
             _ctx.GameLeaders.Add(gl);
             _ctx.SaveChanges();
-            var gt = new Gametype();
-            gt.Description = "Make someone say a word to execute them";
-            _ctx.Gametypes.Add(gt);
-            _ctx.SaveChanges();
             var game = new Game();
             game.GameLeader = gl;
             game.Title = "best game ever";
-            game.Gametype = gt;
             game.Private = false;
             game.Description ="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem id autem corporis vel qui! Error tenetur ea aliquam atque laudantium soluta quae dolorem, animi voluptate voluptatem doloremque, maiores quam et? Itaque et quo vero harum perferendis neque, pariatur eaque debitis cum voluptatem quod amet alias. Dicta vero maiores ab eum pariatur odio nemo officia fugit repellat voluptatum quis ratione consequatur atque est facilis, voluptas, in nihil! Enim impedit incidunt vitae excepturi dolore voluptate nulla repudiandae reprehenderit facere necessitatibus! A eos iste quam hic aspernatur! Tempora incidunt, consequuntur veritatis accusantium reiciendis earum est, nihil nulla laborum modi aliquid? Hic, mollitia quae!";
             _ctx.Games.Add(game);
             _ctx.SaveChanges();
-
-
-
-            
-
             return Redirect("/");
         }
 

@@ -6,6 +6,13 @@
 @{
     ViewData["NavDark"] = true;
     ViewData["Title"] = "Spel aanmaken";
+    var GameTypes = new List<string>{
+        
+        "Woordspel",
+        "Normaal spel"
+    };
+
+    
 }
 <div class="container p2">
     <partial name="_Nav"></partial>
@@ -29,10 +36,18 @@
         @Html.TextBoxFor(m => m.Region)
 
     </div>
-    <div class="formcontrol">
+    <div class="formcontrol ">
         <label>Speltype:</label>
-        @Html.DropDownListFor(m => m.gametypeid, new SelectList(ViewBag.gametypes, "GameTypeId", "GameTypeName"));
+        <div class="dropdowncontainer">
+            @Html.DropDownListFor(m => m.gametype, new SelectList(GameTypes), "Type spel:");
+        </div>
 
+    </div>
+        <div class="formcontrol woord-list-container">
+        <label>Woordenlijst: (Scheiden door middel van spaties)</label>
+        <div class="">
+            @Html.TextBoxFor(m => m.WordString)
+        </div>
     </div>
     <input type="submit" value="Maak spel aan"/>
 
@@ -43,3 +58,20 @@
 </div>
 
 
+<script>
+    var input = document.querySelector(".dropdowncontainer select");
+    var word_list = document.querySelector(".woord-list-container")
+    word_list.classList.add("hide");
+    input.onchange = function (e) {
+        var val = e.target.value;
+        if (val === "Woordspel"){
+            word_list.classList.remove("hide");
+        }else{
+            word_list.classList.add("hide");
+        }
+        
+        
+    
+    }    
+
+</script>

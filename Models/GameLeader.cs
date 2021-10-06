@@ -35,12 +35,12 @@ namespace gotcha_web.Models
 
         public void CreateGame(GotchaDBContext ctx, GameCreateForm form){
             var game = new Game();
-            var gt = ctx.Gametypes.Find(form.gametypeid);
-            if (gt == null)
-            {
-                throw new Exception("Geen gametype met de opgegeven id");
-            }
-            game.SetGameSpecification(gt, this, form.Title, form.Description, form.Region);
+            //var gt = ctx.Gametypes.Find(form.gametypeid);
+            // if (gt == null)
+            // {
+            //     throw new Exception("Geen gametype met de opgegeven id");
+            // }
+            game.SetGameSpecification(this, form.Title, form.Description, form.Region);
             if(!game.CheckGameSpecification())
             {
                 throw new Exception("Validation error");
@@ -49,6 +49,47 @@ namespace gotcha_web.Models
             }
         }
 
+        public void CreateWordGame(GotchaDBContext ctx, GameCreateForm form)
+        {
+            var game = new WordGame();
+            game.SetGameSpecification(this, form.Title, form.Description, form.Region, form.WordString);
+            if (!game.CheckGameSpecification())
+            {
+                throw new Exception("Validation error");
+            }else{
+                ctx.WordGames.Add(game);
+            }
+        }
+        public void StartGame(Game game, string alias, string loggedinas, GotchaDBContext ctx){
+            if (game.userIsOwner(alias, loggedinas)){
+                game.GenerateContracts(ctx);
+                game.Start();
+                ctx.SaveChanges();
+            }else{
+                throw new Exception("Spelleider is geen eigenaar van deze game");
+            }
+            
+        }
+
+        public void StartWordGame(WordGame game, string alias, string loggedinas, GotchaDBContext ctx)
+        {
+           if (game.userIsOwner(alias, loggedinas)){
+               try{
+                   game.GenerateContracts(ctx);
+                    game.Start();
+                    ctx.SaveChanges();
+               }catch(Exception e){
+                   Console.WriteLine(e);
+               }
+                
+            }else{
+                throw new Exception("Spelleider is geen eigenaar van deze game");
+            } 
+            
+        }
+
+
+        
         public static GameLeader FindByID(string alias, GotchaDBContext ctx)
         {
             return ctx.GameLeaders.Where(g => g.alias == alias).FirstOrDefault();

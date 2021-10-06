@@ -102,3 +102,5 @@
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.WebPages.Razor.dll
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/System.Web.WebPages.dll
 /Users/daniel/Projects/gotcha_web/bin/Debug/net5.0/Microsoft.Web.Infrastructure.dll
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Dashboard/Game/WordGameDetail.cshtml.g.cs
+/Users/daniel/Projects/gotcha_web/obj/Debug/net5.0/Razor/Views/Shared/_GameDetail.cshtml.g.cs

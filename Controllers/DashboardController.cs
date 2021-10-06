@@ -12,6 +12,7 @@ using gotcha_web.database;
 using Microsoft.EntityFrameworkCore;
 using gotcha_web.Forms;
 using System.Web.Razor;
+using gotcha_web.util;
 
 namespace gotcha_web.Controllers
 {
@@ -20,15 +21,18 @@ namespace gotcha_web.Controllers
         private readonly GotchaDBContext _ctx;
         private readonly ILogger<DashboardController> _logger;
 
+        private readonly ControllerHelper _helper;
+
         public DashboardController(ILogger<DashboardController> logger, GotchaDBContext ctx)
         {
             _logger = logger;
             _ctx = ctx;
+            _helper = new ControllerHelper();
         }
 
         public IActionResult Index()
         {
-            var alias = HttpContext.Session.GetString("alias");
+            var alias = _helper.getContextVars(HttpContext).alias;
             if (String.IsNullOrEmpty(alias)){
                 return Redirect("/Auth");
             }
@@ -41,7 +45,6 @@ namespace gotcha_web.Controllers
         }
 
         public IActionResult Games(string search){
-            Console.WriteLine(search);
             var alias = HttpContext.Session.GetString("alias");
             if (String.IsNullOrEmpty(alias)){
                 return Redirect("/Auth");
@@ -82,6 +85,24 @@ namespace gotcha_web.Controllers
             return View("Game/Detail");
         }
 
+        public IActionResult WordGameDetail(int id)
+        {
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if (String.IsNullOrEmpty(alias)){
+                return Redirect("/Auth");
+            }
+            var game = WordGame.GetByID(id, _ctx);
+            if(game == null){
+                return Redirect("/Dashboard/Games");
+            }
+            ViewData["isWordGame"] = true;
+            ViewData["owner"] = game.userIsOwner(alias, loggedinas);
+            ViewData["game"] = game;
+            ViewData["playerInGame"] = game.isPlayerInGame(alias);
+            return View("Game/WordGameDetail");
+        }
+
 
         public IActionResult JoinGame(int id)
         {
@@ -89,6 +110,9 @@ namespace gotcha_web.Controllers
             if (game == null)
             {
                 return Redirect("/Dashboard/Games");
+            }
+            if (game.Active){
+                return Redirect($"/Dashboard/GameDetail/{id}");
             }
             var alias = HttpContext.Session.GetString("alias");
             var loggedinas = HttpContext.Session.GetString("loggedinas");
@@ -112,6 +136,31 @@ namespace gotcha_web.Controllers
             return Redirect($"/Dashboard/GameDetail/{id}");
         }
 
+        
+
+        public IActionResult Mygamespl(){
+            var alias = HttpContext.Session.GetString("alias");
+            
+            if (String.IsNullOrEmpty(alias)){
+                return Redirect("/Auth");
+            }
+
+            var games = _ctx.Games.Include(g => g.GameLeader).Include(g => g.Players).Where(g => g.Players.Any(p => p.alias == alias)).ToList();
+            ViewData["games"] = games;
+            return View("Game/Index");
+        }
+
+         public IActionResult Mygamesgl(){
+            var alias = HttpContext.Session.GetString("alias");
+            var loggedinas = HttpContext.Session.GetString("loggedinas");
+            if (String.IsNullOrEmpty(alias) || loggedinas == "player"){
+                return Redirect("/Auth");
+            }
+
+            ViewData["games"] = _ctx.Games.Include(g => g.GameLeader).Include(g => g.Players).Where(g => g.GameLeader.alias == alias).ToList();
+            return View("Game/Index");
+        }
+
         public IActionResult CreateGame(){
             var alias = HttpContext.Session.GetString("alias");
             var loggedinas = HttpContext.Session.GetString("loggedinas");
@@ -123,11 +172,42 @@ namespace gotcha_web.Controllers
                 return Redirect("/Dashboard/Games");
             } 
             
-            ViewBag.gametypes = _ctx.Gametypes.ToList();
+            //ViewBag.gametypes = _ctx.Gametypes.ToList();
             return View("Game/GameCreate");
         }
 
+        // public IActionResult GenerateContracts(int id)
+        // {
+        //     var game = Game.GetByID(id, _ctx);
+        //     if (game == null){
+        //         Redirect("/Dashboard/Games");
+        //     }
+        //     var (alias, loggedinas) = _helper.getContextVars(HttpContext);
+        //     Console.WriteLine($"output helper.getcontextvars: {alias}, {loggedinas}");
+        //     if (loggedinas == "player")
+        //     {
+        //         Redirect("/Auth");
+        //     }
+        //     var gl = _ctx.GameLeaders.Where(gl => gl.alias == alias).FirstOrDefault();
+        //     if (gl == null){
+        //         Redirect("/Auth");
+        //     }
 
+        //     try{
+        //         if(game.GetType().Name == "WordGame"){
+        //             Console.WriteLine("Generating word contracts");
+        //             var wordGame = WordGame.GetByID(game.GameId, _ctx);
+        //             gl.GenerateWordContractsForGame(wordGame, alias, loggedinas, _ctx);
+        //         }else{
+        //             gl.GenerateContractsForGame(game, alias, loggedinas, _ctx);
+        //         }
+                
+        //     }catch(Exception e){
+        //         _logger.LogError(1, e, "error generating contracts");
+        //     }
+            
+        //     return Redirect($"/Dashboard/GameDetail/{id}");
+        // }
         
 
         [HttpPost]
@@ -145,8 +225,14 @@ namespace gotcha_web.Controllers
 
             var gl = GameLeader.FindByID(alias, _ctx);
             try{
-                gl.CreateGame(_ctx, form);
-                _ctx.SaveChanges();
+                if (form.gametype == "Woordspel"){
+                    gl.CreateWordGame(_ctx, form);
+                    _ctx.SaveChanges();
+                } else {
+                    gl.CreateGame(_ctx, form);
+                    _ctx.SaveChanges();
+                }
+                
             }catch(Exception e){
                 Console.WriteLine(e);
             }
@@ -156,6 +242,43 @@ namespace gotcha_web.Controllers
         public IActionResult Logout(){
             HttpContext.Session.SetString("alias", "");
             return Redirect("/Auth");
+        }
+
+        public IActionResult StartGame(int id){
+            var game = Game.GetByID(id, _ctx);
+            if (game == null){
+                Console.WriteLine("game is null");
+                return Redirect("/Dashboard/Games");
+            }
+            var (alias, loggedinas) = _helper.getContextVars(HttpContext);
+            Console.WriteLine($"output helper.getcontextvars: {alias}, {loggedinas}");
+            if (loggedinas == "player")
+            {
+                Console.WriteLine("logged in as player");
+                return Redirect("/Auth");
+            }
+            var gl = _ctx.GameLeaders.Where(gl => gl.alias == alias).FirstOrDefault();
+            if (gl == null){
+                return Redirect("/Auth");
+            }
+
+            try{
+                if(game.GetType().Name == "WordGame"){
+                    Console.WriteLine("Generating word contracts");
+                    var wordGame = WordGame.GetByID(game.GameId, _ctx);
+                    if (wordGame == null){
+                        Console.WriteLine("wordgame is null");
+                        return Redirect("/Dashboard/Games");
+                    }
+                    gl.StartWordGame(wordGame, alias, loggedinas, _ctx);
+                }else{
+                    gl.StartGame(game, alias, loggedinas, _ctx);
+                }
+                
+            }catch(Exception e){
+                _logger.LogError(1, e, "error generating contracts");
+            }
+            return Redirect($"/Dashboard/GameDetail/{id}");
         }
         
     }

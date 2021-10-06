@@ -44,6 +44,10 @@ namespace gotcha_web.Migrations
                     b.Property<int?>("AssassinId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("EliminationId")
                         .HasColumnType("int");
 
@@ -64,6 +68,8 @@ namespace gotcha_web.Migrations
                     b.HasIndex("TargetId");
 
                     b.ToTable("Contracts");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Contract");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.Elimination", b =>
@@ -101,13 +107,17 @@ namespace gotcha_web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GameLeaderId")
-                        .HasColumnType("int");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GameTypeId")
+                    b.Property<int?>("GameLeaderId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Private")
@@ -123,27 +133,9 @@ namespace gotcha_web.Migrations
 
                     b.HasIndex("GameLeaderId");
 
-                    b.HasIndex("GameTypeId");
-
                     b.ToTable("Games");
-                });
 
-            modelBuilder.Entity("gotcha_web.Models.Gametype", b =>
-                {
-                    b.Property<int>("GameTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GameTypeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("GameTypeId");
-
-                    b.ToTable("Gametypes");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Game");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.GametypeRequest", b =>
@@ -220,6 +212,31 @@ namespace gotcha_web.Migrations
                     b.ToTable("Users");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("gotcha_web.Models.WordContract", b =>
+                {
+                    b.HasBaseType("gotcha_web.Models.Contract");
+
+                    b.Property<string>("Word")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WordGameGameId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("WordGameGameId");
+
+                    b.HasDiscriminator().HasValue("WordContract");
+                });
+
+            modelBuilder.Entity("gotcha_web.Models.WordGame", b =>
+                {
+                    b.HasBaseType("gotcha_web.Models.Game");
+
+                    b.Property<string>("Words")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("WordGame");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.GameLeader", b =>
@@ -305,13 +322,7 @@ namespace gotcha_web.Migrations
                         .WithMany()
                         .HasForeignKey("GameLeaderId");
 
-                    b.HasOne("gotcha_web.Models.Gametype", "Gametype")
-                        .WithMany()
-                        .HasForeignKey("GameTypeId");
-
                     b.Navigation("GameLeader");
-
-                    b.Navigation("Gametype");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.GametypeRequest", b =>
@@ -330,6 +341,13 @@ namespace gotcha_web.Migrations
                         .HasForeignKey("GameId");
                 });
 
+            modelBuilder.Entity("gotcha_web.Models.WordContract", b =>
+                {
+                    b.HasOne("gotcha_web.Models.WordGame", null)
+                        .WithMany("WordContracts")
+                        .HasForeignKey("WordGameGameId");
+                });
+
             modelBuilder.Entity("gotcha_web.Models.GameLeader", b =>
                 {
                     b.HasOne("gotcha_web.Models.Player", "PlayerAccount")
@@ -344,6 +362,11 @@ namespace gotcha_web.Migrations
                     b.Navigation("Contracts");
 
                     b.Navigation("Rules");
+                });
+
+            modelBuilder.Entity("gotcha_web.Models.WordGame", b =>
+                {
+                    b.Navigation("WordContracts");
                 });
 
             modelBuilder.Entity("gotcha_web.Models.GameLeader", b =>

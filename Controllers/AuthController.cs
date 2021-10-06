@@ -96,6 +96,7 @@ namespace gotcha_web.Controllers
             _ctx.Players.Add(userFromForm);
             _ctx.SaveChanges();
             HttpContext.Session.SetString("alias", userFromForm.alias);
+            HttpContext.Session.SetString("loggedinas", "player");
             return Redirect("/Dashboard");
         }
 

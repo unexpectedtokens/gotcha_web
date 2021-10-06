@@ -15,7 +15,10 @@ namespace gotcha_web.database
         public DbSet<Rule> Rules {get;set;}
         public DbSet<Contract> Contracts {get;set;}
         public DbSet<Elimination> Eliminations{get;set;}
-        public DbSet<Gametype> Gametypes {get;set;}
+        
+
+        public DbSet<WordGame> WordGames {get;set;}
+        public DbSet<WordContract> WordContracts {get;set;}
         public DbSet<GametypeRequest> GametypeRequests {get;set;}
         
         

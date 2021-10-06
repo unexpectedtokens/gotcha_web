@@ -3,16 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using gotcha_web.database;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 namespace gotcha_web.Models
 {
     public class Game{
         public int GameId {get;set;}
 
+        public bool Active {get;set;}
+
         public string Title {get;set;}
         public string Description {get;set;}
         public string Region {get;set;}
         public bool Private {get;set;}
-        public Gametype Gametype {get;set;}
+        
         public ICollection<Rule> Rules {get;set;}
         public ICollection<Player> Players{get;set;}
 
@@ -27,10 +30,15 @@ namespace gotcha_web.Models
         {
             return Players.Count;
         }
-
+        public int GetContractCount()
+        {
+            return Contracts.Count;
+        }
         public static Game GetByID(int id, GotchaDBContext ctx)
         {
             return ctx.Games.Include(g => g.Players).Include(g => g.GameLeader).Include(g => g.Contracts).Where(g => g.GameId == id).FirstOrDefault();
+            
+            
         }
 
         public bool userIsOwner(string alias, string loggedinas){
@@ -76,9 +84,8 @@ namespace gotcha_web.Models
             return eliminated;
         }
 
-        public void SetGameSpecification(Gametype gametype, GameLeader gameLeader, string title, string description, string region)
+        public void SetGameSpecification(GameLeader gameLeader, string title, string description, string region)
         {
-            Gametype = gametype;
             GameLeader = gameLeader;
             Region = region;
             Title = title;
@@ -86,10 +93,47 @@ namespace gotcha_web.Models
 
         }
 
-        public bool CheckGameSpecification()
+       
+
+        public void GenerateContracts(GotchaDBContext ctx)
+        {
+            
+            ctx.Contracts.RemoveRange(Contracts);
+            
+            
+            if (GetPlayerCount() < 3)
+            {
+                throw new Exception("Minimaal 3 spelers nodig om contracten aan te maken");
+            }
+            var list_players = new List<Player>(Players);
+            var first = list_players[0];
+            var contracts = new List<Contract>();
+            for(int x = 0; x < list_players.Count;x++){
+                
+                var c = new Contract();
+                c.Assassin = list_players[x];
+                if (x == list_players.Count - 1 )
+                {
+                    c.Target = first;
+                } else {
+                    c.Target = list_players[x + 1];
+                }
+                c.Elimination = null;
+                ctx.Contracts.Add(c);
+                contracts.Add(c);
+                ctx.SaveChanges();
+            }
+            Contracts = contracts;
+        }
+
+        public virtual bool CheckGameSpecification()
         {
             return true;
         }
 
+        public void Start(){
+            Active = true;
+            
+        }
     }
 }
