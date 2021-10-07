@@ -16,6 +16,9 @@ namespace gotcha_web.Models
         }
 
 
+        public void GetAllMyGames()
+        {}
+
         public GameLeader(Player playerAccount){
             this.alias = playerAccount.alias;
             this.email = playerAccount.email;

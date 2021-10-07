@@ -135,5 +135,17 @@ namespace gotcha_web.Models
             Active = true;
             
         }
+
+        public virtual Contract GetPlayerContract(string alias)
+        {
+            Contract contract = new();
+            foreach (var item in Contracts)
+            {
+                if(item.Assassin.alias == alias){
+                    contract = item;
+                }
+            }
+            return contract;
+        }
     }
 }

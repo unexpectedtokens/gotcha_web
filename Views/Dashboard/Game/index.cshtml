@@ -30,13 +30,17 @@
         @{
             foreach(var x in games){
                 var wordgame = x.GetType().Name == "WordGame";
-                
+                var gamestatus = x.Active ? "Spel is al bezig" : "Spel is nog niet begonnen";
                 <a href="/Dashboard/@if(wordgame){<text>WordGameDetail</text>}else{<text>GameDetail</text>}/@x.GameId" class="game-item">
                 <div class="game-item-innercont">
                     <div class="game-item-left">
                     <h3>@x.Title</h3>
                     <p>Speltype: @if(x.GetType().Name == "WordGame"){<text>Woordspel</text>}else{<text>Normaal spel</text>}</p>
                     <p>Van: <span>@x.GameLeader.alias</span></p>
+
+                    </div>
+                    <div>
+                        <p>@gamestatus</p>
 
                     </div>
                     <div class="game-item-right">

@@ -598,6 +598,21 @@ Games
 .contracts-list .contract span.alias {
   font-weight: 900;
 }
+
+.mycontract-container {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  border-radius: 5px;
+}
+.mycontract-container h3 {
+  font-size: 2rem;
+  color: var(--red);
+}
+
+.mycontract-container h5 {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
 /*
 _
 _

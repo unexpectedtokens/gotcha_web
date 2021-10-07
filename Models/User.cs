@@ -21,6 +21,8 @@ namespace gotcha_web.Models
         {
             return password == AttemptedPassword;
         }
+
+        
         
         
     }

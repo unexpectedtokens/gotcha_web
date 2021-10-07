@@ -1,5 +1,6 @@
 @using gotcha_web.Models;
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     WordGame game = (WordGame)ViewData["game"];
     ViewData["NavDark"] = true;
@@ -15,6 +16,10 @@
     ViewData["gameleaderalias"] = game.GameLeader.alias;
     ViewData["gameactive"] = game.Active;
     Console.WriteLine(game.WordContracts);
+    
+   
+    var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
+
 }
 
 
@@ -52,12 +57,15 @@
      </div>
 
 }else{
-    <div class="mycontract-container">
-        <h1>yes</h1>
-    </div>
+   if(inGame && game.Active){
+       var playercontract = game.GetPlayerContract(alias);
+        <div class="mycontract-container">
+            <h3>Jouw contract:</h3>
+            <h5>De alias van je doelwit is: @playercontract.Target.alias</h5>
+            <h5>De naam van je doelwit is: @playercontract.Target.toString()</h5>
+            <h5>Het woord dat je doelwit moet uitspreken is: @playercontract.Word</h5>
+        </div>
+    }
 }
-
-
-
 </div>
 

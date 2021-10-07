@@ -1,4 +1,7 @@
 @using gotcha_web.Models;
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 
 @{
 
@@ -16,6 +19,7 @@
     ViewData["Description"] = game.Description;
     ViewData["gameleaderalias"] = game.GameLeader.alias;
     ViewData["gameactive"] = game.Active;
+    var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
 }
 
 <partial name="_GameDetail"></partial>
@@ -54,9 +58,15 @@
      </div>
 
 }else{
-    <div class="mycontract-container">
-        <h1>yes</h1>
-    </div>
+    if(inGame){
+        var c = game.GetPlayerContract(alias);
+        <div class="mycontract-container">
+            <h3>Jouw contract:</h3>
+            <h5>De alias van je doelwit is: @c.Target.alias</h5>
+            <h5>De naam van je doelwit is: @c.Target.toString()</h5>
+        </div>
+    }
+    
 }
 
 

@@ -110,5 +110,17 @@ namespace gotcha_web.Models{
             }
             ctx.SaveChanges();
         }
+        public override WordContract GetPlayerContract(string alias)
+        {
+            WordContract wc = new();
+            foreach (var item in WordContracts)
+            {
+                if(item.Assassin.alias == alias)
+                {
+                    wc = item;
+                }
+            }
+            return wc;
+        }
     }
 }
