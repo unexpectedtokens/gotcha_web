@@ -1,13 +1,10 @@
-
+@model gotcha_web.Models.Game;
 @{
+    var g = Model;
     ViewData["render_db_home"] = true;
     ViewData["NavDark"] = true;
-    var active = Convert.ToBoolean(ViewData["gameactive"]);
     var owner = Convert.ToBoolean(ViewData["owner"]);
     var inGame = Convert.ToBoolean(ViewData["playerInGame"]);
-    var playercount = Convert.ToInt32(ViewData["playercount"]);
-    var gameid = ViewData["Gameid"];
-    var players = (ICollection<Player>)ViewData["players"];
     var playerEliminated = Convert.ToBoolean(ViewData["playereliminated"]);
 }
 
@@ -21,20 +18,21 @@
 <div class="container p2">
     <div class="game-detail-container">
         <div>
-            <h1>@ViewData["Title"]<h1>
-            <div><span class="material-icons">people</span>
-                        <span class="count">@playercount</span></div>
+            <h1>@Model.Title<h1>
+            <div class="game-detail-container-playercount"><span class="material-icons">people</span>
+                        <span class="count">@Model.GetPlayerCount()</span>
+            </div>
         </div>
-        <p>Van: <span class="gameleader">@ViewData["gameleaderalias"]</p></span>
-        <p><span>Beschrijving</span>: @ViewData["description"]</p>
+        <p>Van: <span class="gameleader">@g.GameLeader.alias</p></span>
+        <p><span>Beschrijving</span>: g.Description</p>
         @{
-            if(!owner && !inGame && !active){
-                <a href='/Dashboard/JoinGame/@gameid' class="join-game">Neem deel aan spel</a>
-            }else if(owner && playercount >= 3){
-                @if(!active){
-                    <a href="/Dashboard/StartGame/@gameid" class="join-game">Start spel</a>
+            if(!owner && !inGame && !Model.Active){
+                <a href='/Dashboard/JoinGame/@Model.GameId' class="join-game">Neem deel aan spel</a>
+            }else if(owner && Model.GetPlayerCount() >= 3){
+                @if(!Model.Active){
+                    <a href="/Dashboard/StartGame/@Model.GameId" class="join-game">Start spel</a>
                 }else{
-                    <a href="/Dashboard/StopGame/@gameid" class="join-game">Stop spel</a>
+                    <a href="/Dashboard/StopGame/@Model.GameId" class="join-game">Stop spel</a>
                 }
             }
         }
@@ -43,11 +41,11 @@
         <div class="players-container">
             <h2>Spelers</h2>
             <div>
-                @if(playercount == 0){
+                @if(Model.GetPlayerCount() == 0){
                     <p>Er zitten nog geen spelers in dit spel</p>
                 }else{
                     <div class="playeritems">
-                        @foreach (var p in players)
+                        @foreach (var p in Model.Players)
                         {
                             <div class="playeritem">
                                 <p><span>@p.alias</span>@if(playerEliminated){<span class="eliminated">Geëlimineerd</span>}else{<span class="active">Actief</span>}</p>

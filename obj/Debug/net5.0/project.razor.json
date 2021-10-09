@@ -15689,6 +15689,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Shared/_Contract.cshtml",
+      "TargetPath": "Views\\Shared\\_Contract.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/daniel/Projects/gotcha_web/Views/Dashboard/Game/Detail.cshtml",
       "TargetPath": "Views\\Dashboard\\Game\\Detail.cshtml",
       "FileKind": "mvc"

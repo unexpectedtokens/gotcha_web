@@ -461,6 +461,7 @@ Games
 .game-item-innercont {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .game-item-right {
@@ -480,9 +481,17 @@ Games
   text-transform: capitalize;
   margin-right: 5rem;
 }
+.game-detail-container .count {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
 .game-detail-container p {
   font-size: 1.5rem;
   margin-bottom: 2rem;
+}
+.game-detail-container-playercount {
+  display: flex;
+  align-items: center;
 }
 .game-detail-container p span.gameleader {
   color: var(--red);
@@ -500,11 +509,6 @@ Games
   align-items: center;
 }
 
-.game-detail-container > div > div .count {
-  font-size: 1.5rem;
-  margin-left: 0.5rem;
-}
-
 .game-detail-container .join-game {
   display: block;
   background-color: var(--red);
@@ -514,6 +518,10 @@ Games
   text-align: center;
   font-size: 1.8rem;
   border-radius: 5px;
+}
+
+.contract-sect h3 {
+  margin: 2rem 0;
 }
 
 .players-container {
@@ -612,6 +620,15 @@ Games
 .mycontract-container h5 {
   margin: 1rem 0;
   font-size: 1.5rem;
+}
+
+.mycontract-container p {
+  font-size: 1.8rem;
+}
+
+.mycontract-container p span {
+  font-size: 2rem;
+  font-weight: bold;
 }
 /*
 _

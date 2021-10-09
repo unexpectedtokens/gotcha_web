@@ -16,6 +16,7 @@ using gotcha_web.database;
 
 namespace gotcha_web.Controllers
 {
+    //Authcontroller
     public class AuthController : Controller
     {
         private readonly ILogger<HomeController> _logger;

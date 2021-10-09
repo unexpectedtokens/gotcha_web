@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using gotcha_web.database;
 using Microsoft.EntityFrameworkCore;
 using gotcha_web.Forms;
-using System.Web.Razor;
 using gotcha_web.util;
 
 namespace gotcha_web.Controllers

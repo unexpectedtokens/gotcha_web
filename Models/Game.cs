@@ -36,7 +36,13 @@ namespace gotcha_web.Models
         }
         public static Game GetByID(int id, GotchaDBContext ctx)
         {
-            return ctx.Games.Include(g => g.Players).Include(g => g.GameLeader).Include(g => g.Contracts).Where(g => g.GameId == id).FirstOrDefault();
+            return ctx.Games
+                    .Include(g => g.Players)
+                    .Include(g => g.GameLeader)
+                    .Include(g => g.Contracts)
+                        .ThenInclude(c => c.Target)
+                    .Where(g => g.GameId == id)
+                    .FirstOrDefault();
             
             
         }

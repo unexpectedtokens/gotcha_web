@@ -7,29 +7,24 @@
     ViewData["Title"] = game.Title;
     var owner = Convert.ToBoolean(ViewData["owner"]);
     var inGame = Convert.ToBoolean(ViewData["playerInGame"]);
-    ViewData["playercount"] = game.GetPlayerCount();
-    ViewData["players"] = game.Players;
     ViewData["playereliminated"] = game.isPlayerEliminated(Convert.ToString(ViewData["alias"]));
-    ViewData["Gameid"] = game.GameId;
     ViewData["render_db_home"] = true;
-    ViewData["Description"] = game.Description;
-    ViewData["gameleaderalias"] = game.GameLeader.alias;
-    ViewData["gameactive"] = game.Active;
-    Console.WriteLine(game.WordContracts);
-    
-   
     var alias = HttpContextAccessor.HttpContext.Session.GetString("alias");
-
+    WordContract playercontract = null;
+    if (game.Active && !owner && inGame){
+        playercontract = game.GetPlayerContract(alias);
+    }
+    
 }
 
 
 
 
 
-<partial name="_GameDetail"></partial>
+<partial name="_GameDetail" model="@game"></partial>
 
 
-<div class="container p2">
+<div class="container p2 contract-sect">
     @if (owner){
      <div class="grid-container">
             <div class="contracts-container">
@@ -57,15 +52,21 @@
      </div>
 
 }else{
-   if(inGame && game.Active){
-       var playercontract = game.GetPlayerContract(alias);
-        <div class="mycontract-container">
-            <h3>Jouw contract:</h3>
-            <h5>De alias van je doelwit is: @playercontract.Target.alias</h5>
-            <h5>De naam van je doelwit is: @playercontract.Target.toString()</h5>
-            <h5>Het woord dat je doelwit moet uitspreken is: @playercontract.Word</h5>
-        </div>
-    }
+    <h3>Jouw contract:</h3>
+    <div class="mycontract-container">
+        
+        @if(inGame && game.Active){
+            
+            
+            <h3>Doelwit:</h3>
+            <p>De alias van je doelwit is: @playercontract.Target.alias</p>
+            <p>De naam van je doelwit is: @playercontract.Target.toString()</p>
+            <p>Het woord dat je doelwit moet uitspreken is: <span>@playercontract.Word</span></p>
+            
+        }else{
+            <p>Je krijgt een contract toegewezen als het spel begonnen is.</p>
+        }
+    </div>
 }
 </div>
 
